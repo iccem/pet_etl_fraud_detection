@@ -2,6 +2,7 @@ import sqlite3
 
 import py_scripts.utility as u
 import py_scripts.init_and_load__ddl_dmldb as init
+import py_scripts.etl_pipeline as etl
 
 
 def main():
@@ -20,7 +21,7 @@ def main():
     date_report = input()
     result_of_validation = u.validate_date(date_report)
     if result_of_validation:
-        pass
+        etl.create_etl_pipeline(con, date_report)
 
     cursor = con.cursor()
     try:
