@@ -22,6 +22,7 @@ def main():
     result_of_validation = u.validate_date(date_report)
     if result_of_validation:
         etl.create_etl_pipeline(con, date_report)
+        # etl.create_fraud_report(con, date_report)
 
     cursor = con.cursor()
     try:
