@@ -14,6 +14,18 @@ def validate_date(date_of_report: str) -> bool:
         return False
 
 
+def get_date(filename: str) -> str:
+    """
+    Parse the file name and returns the date.
+
+    """
+    f = filename.split('_')
+    f_ = f[-1].split('.')
+    date_ = f_[0]
+    temp_date = date_[4:] + '-' + date_[2:4] + '-' + date_[:2]
+    return temp_date
+
+
 def show_table(cursor, tbl_name: str) -> None:
     """
     Prints all rows from the table.
