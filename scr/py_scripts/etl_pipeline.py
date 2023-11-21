@@ -3,6 +3,8 @@ import py_scripts.transactions as ld
 import py_scripts.terminals as lt
 import py_scripts.init_additionals_tbls as adt
 import py_scripts.passport_blacklist as pbl
+import py_scripts.init_rep_fraud as r
+import py_scripts.rep_fraud as rf
 
 
 def create_etl_pipeline(con, date_report: str):
@@ -40,3 +42,15 @@ def create_etl_pipeline(con, date_report: str):
     except (FileNotFoundError, IOError):
         print("A new report on passports blacklist was not found.")
         ut.delete_tbl(cursor, 'STG_PASSPORT_BLACKLIST')
+
+
+def create_fraud_report(con, date_report: str) -> None:
+    """
+
+    :param con:
+    :param date_report:
+    :return:
+    """
+    r.init_rep_fraud_tbl(con)
+
+    rf.if_fraud(con, date_report)
