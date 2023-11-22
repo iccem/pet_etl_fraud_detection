@@ -44,13 +44,11 @@ def create_etl_pipeline(con, date_report: str):
         ut.delete_tbl(cursor, 'STG_PASSPORT_BLACKLIST')
 
 
-def create_fraud_report(con, date_report: str) -> None:
+def get_fraud_report(con, date_report: str) -> None:
     """
+    Creates fraud report.
 
-    :param con:
-    :param date_report:
-    :return:
     """
     r.init_rep_fraud_tbl(con)
 
-    rf.if_fraud(con, date_report)
+    rf.create_fraud_report(con, date_report)

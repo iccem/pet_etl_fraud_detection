@@ -1,11 +1,14 @@
 from datetime import datetime
 from datetime import date
 from datetime import timedelta
-import src.py_scripts.utility as u
+import py_scripts.utility as u
 
 
-# Совершение операции при просроченном или заблокированном паспорте.
 def get_report_by_not_valid_passport(con, readable_report_dt):
+    """
+    Verifies the case: performing an operation on expired or blocked passport.
+
+    """
     cursor = con.cursor()
 
     try:
@@ -60,8 +63,12 @@ def get_report_by_not_valid_passport(con, readable_report_dt):
     except:
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_PASSPORT')
 
-# Совершение операции при недействующем договоре.
+
 def get_report_by_not_valid_account(con, readable_report_dt):
+    """
+    Verifies the case: a contract that is not valid.
+    
+    """
     cursor = con.cursor()
 
     try:
@@ -115,8 +122,11 @@ def get_report_by_not_valid_account(con, readable_report_dt):
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_ACCOUNT')
 
 
-# Совершение операций в разных городах в течение одного часа.
 def get_report_by_multy_cities_per_hour(con, readable_report_dt):
+    """
+    Verifies the case: transactions in different cities within one hour.
+    
+    """
     cursor = con.cursor()
 
     try:
@@ -254,6 +264,10 @@ def get_report_by_multy_cities_per_hour(con, readable_report_dt):
 
 
 def get_report_by_fraud_operations(con, readable_report_dt):
+    """
+    Searches fraud operations.
+    
+    """
     cursor = con.cursor()
 
     try:
@@ -347,7 +361,7 @@ def get_report_by_fraud_operations(con, readable_report_dt):
         cursor.execute('DROP TABLE IF EXISTS REP_FRAUD')
 
 
-def if_fraud(con, report_dt):
+def create_fraud_report(con, report_dt):
     readable_report_dt = u.get_readable_date(report_dt)
     datetime_object = datetime.strptime(readable_report_dt, '%Y-%m-%d').date()
     shift_day = datetime_object + timedelta(days=1)
