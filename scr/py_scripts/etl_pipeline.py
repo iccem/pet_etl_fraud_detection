@@ -21,7 +21,7 @@ def create_etl_pipeline(con, date_report: str):
     path_terminals = r'terminals_' + date_report + '.xlsx'
     try:
         lt.load_terminals_report(con, path_terminals)
-        u.upload(path_terminals)
+        ut.upload(path_terminals)
     except (FileNotFoundError, IOError):
         print("A new report on terminals was not found.")
         ut.delete_tbl(cursor, 'STG_TERMINALS')
@@ -30,7 +30,7 @@ def create_etl_pipeline(con, date_report: str):
     path_transactions = r'transactions_' + date_report + '.txt'
     try:
         ld.load_transactions_report(con, path_transactions)
-        u.upload(path_transactions)
+        ut.upload(path_transactions)
     except (FileNotFoundError, IOError):
         print("A new report on transactions was not found.")
         ut.delete_tbl(cursor, 'STG_TRANSACTIONS')
@@ -38,7 +38,7 @@ def create_etl_pipeline(con, date_report: str):
     path_pass = r'passport_blacklist_' + date_report + '.xlsx'
     try:
         pbl.load_passport_blacklist_report(con, path_pass)
-        u.upload(path_pass)
+        ut.upload(path_pass)
     except (FileNotFoundError, IOError):
         print("A new report on passports blacklist was not found.")
         ut.delete_tbl(cursor, 'STG_PASSPORT_BLACKLIST')
