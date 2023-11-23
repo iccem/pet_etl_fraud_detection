@@ -1,4 +1,5 @@
 import datetime
+import os
 
 
 def validate_date(date_of_report: str) -> bool:
@@ -60,3 +61,8 @@ def get_readable_date(report_dt):
     report_dt = report_dt.replace('-', '')
     readable_report_dt = report_dt[4:] + '-' + report_dt[2:4] + '-' + report_dt[:2]
     return readable_report_dt
+
+
+def upload(file):
+    path_archive = os.path.join('archive', file + '.backup')
+    os.rename(file, path_archive)
