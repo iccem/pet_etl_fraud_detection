@@ -60,8 +60,10 @@ def get_report_by_not_valid_passport(con, readable_report_dt):
 
         con.commit()
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_PASSPORT')
+        return True
     except:
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_PASSPORT')
+        return False
 
 
 def get_report_by_not_valid_account(con, readable_report_dt):
@@ -118,8 +120,10 @@ def get_report_by_not_valid_account(con, readable_report_dt):
 
         con.commit()
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_ACCOUNT')
+        return True
     except:
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_ACCOUNT')
+        return False
 
 
 def get_report_by_multy_cities_per_hour(con, readable_report_dt):
@@ -256,11 +260,13 @@ def get_report_by_multy_cities_per_hour(con, readable_report_dt):
         cursor.execute('DROP TABLE IF EXISTS STG_COMPARE_CITIES')
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_TRANSACTION_BY_CITY')
         cursor.execute('DROP TABLE IF EXISTS STG_DWH_DIM_CLIENTS_info')
+        return True
     except:
         cursor.execute('DROP TABLE IF EXISTS STG_TRANSACTION_BY_CITY')
         cursor.execute('DROP TABLE IF EXISTS STG_COMPARE_CITIES')
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_TRANSACTION_BY_CITY')
         cursor.execute('DROP TABLE IF EXISTS STG_DWH_DIM_CLIENTS_info')
+        return False
 
 
 def get_report_by_fraud_operations(con, readable_report_dt):
@@ -367,7 +373,10 @@ def create_fraud_report(con, report_dt):
     shift_day = datetime_object + timedelta(days=1)
     readable_report_dt = str(shift_day)
 
-    get_report_by_not_valid_passport(con, readable_report_dt)
-    get_report_by_not_valid_account(con, readable_report_dt)
-    get_report_by_multy_cities_per_hour(con, readable_report_dt)
+    result_passport = get_report_by_not_valid_passport(con, readable_report_dt)
+    result_account = get_report_by_not_valid_account(con, readable_report_dt)
+    result_multy_cities = get_report_by_multy_cities_per_hour(con, readable_report_dt)
+
+    if result_passport and result_account and result_multy_cities:
+        print('Fraud operations not found.')
     get_report_by_fraud_operations(con, readable_report_dt)
