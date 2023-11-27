@@ -1,10 +1,9 @@
-import src.py_scripts.date_from_filename as da
-import src.py_scripts.utility as ut
+import py_scripts.utility as ut
 import pandas as pd
 
 
 def load_passport_blacklist_report(con, file_path):
-    doc_timestamp = str(da.get_date(file_path))
+    doc_timestamp = str(ut.get_date(file_path))
 
     load_tbl_tmp(con, file_path)
     create_new_rows(con, doc_timestamp)

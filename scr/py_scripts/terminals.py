@@ -1,10 +1,9 @@
 import pandas as pd
-import src.py_scripts.utility as ut
-import src.py_scripts.date_from_filename as da
+import py_scripts.utility as ut
 
 
 def load_terminals_report(con, file_path):
-    doc_timestamp = str(da.get_date(file_path))
+    doc_timestamp = str(ut.get_date(file_path))
     
     load_terminals_tmp(con, file_path)
     create_new_rows(con)
