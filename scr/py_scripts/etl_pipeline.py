@@ -14,11 +14,12 @@ def create_etl_pipeline(con, date_report: str):
     and passport blacklist reports.
 
     """
+    path = 'D:/Icc/PycharmProjects/pet_etl_fraud_detection/pet_etl_fraud_detection/data/'
     cursor = con.cursor()
     adt.init_additional_tbls(cursor)
     date_report = date_report.replace('-', '')
-
-    path_terminals = r'terminals_' + date_report + '.xlsx'
+    path_terminals = path + 'terminals_02032021.xlsx'
+    # path_terminals = path + 'terminals_' + date_report + '.xlsx'
     try:
         lt.load_terminals_report(con, path_terminals)
         ut.upload(path_terminals)
