@@ -18,8 +18,8 @@ def create_etl_pipeline(con, date_report: str):
     cursor = con.cursor()
     adt.init_additional_tbls(cursor)
     date_report = date_report.replace('-', '')
-    path_terminals = path + 'terminals_02032021.xlsx'
-    # path_terminals = path + 'terminals_' + date_report + '.xlsx'
+    # path_terminals = path + 'terminals_02032021.xlsx'
+    path_terminals = path + 'terminals_' + date_report + '.xlsx'
     try:
         lt.load_terminals_report(con, path_terminals)
         ut.upload(path_terminals)
@@ -28,7 +28,7 @@ def create_etl_pipeline(con, date_report: str):
         ut.delete_tbl(cursor, 'STG_TERMINALS')
         ut.delete_view(cursor, 'STG_V_TERMINALS')
 
-    path_transactions = r'transactions_' + date_report + '.txt'
+    path_transactions = path + 'transactions_' + date_report + '.txt'
     try:
         ld.load_transactions_report(con, path_transactions)
         ut.upload(path_transactions)
@@ -36,7 +36,7 @@ def create_etl_pipeline(con, date_report: str):
         print("A new report on transactions was not found.")
         ut.delete_tbl(cursor, 'STG_TRANSACTIONS')
 
-    path_pass = r'passport_blacklist_' + date_report + '.xlsx'
+    path_pass = path + 'passport_blacklist_' + date_report + '.xlsx'
     try:
         pbl.load_passport_blacklist_report(con, path_pass)
         ut.upload(path_pass)
