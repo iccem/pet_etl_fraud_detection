@@ -5,6 +5,14 @@ import py_scripts.init_additionals_tbls as adt
 import py_scripts.passport_blacklist as pbl
 import py_scripts.init_rep_fraud as r
 import py_scripts.rep_fraud as rf
+import py_scripts.init_and_load__ddl_dmldb as init
+
+
+def preload(con):
+    cursor = con.cursor()
+
+    # Загрузка данных из файла ddl_dml.sql в базу данных
+    init.create_db(cursor)
 
 
 def create_etl_pipeline(con, date_report: str):
@@ -52,4 +60,4 @@ def get_fraud_report(con, date_report: str) -> None:
     """
     r.init_rep_fraud_tbl(con)
 
-    rf.create_fraud_report(con, date_report)
+    rf.if_fraud(con, date_report)

@@ -4,11 +4,8 @@ from datetime import timedelta
 import py_scripts.utility as u
 
 
+# Совершение операции при просроченном или заблокированном паспорте.
 def get_report_by_not_valid_passport(con, readable_report_dt):
-    """
-    Verifies the case: performing an operation on expired or blocked passport.
-
-    """
     cursor = con.cursor()
 
     try:
@@ -60,17 +57,11 @@ def get_report_by_not_valid_passport(con, readable_report_dt):
 
         con.commit()
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_PASSPORT')
-        return True
     except:
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_PASSPORT')
-        return False
 
-
+# Совершение операции при недействующем договоре.
 def get_report_by_not_valid_account(con, readable_report_dt):
-    """
-    Verifies the case: a contract that is not valid.
-    
-    """
     cursor = con.cursor()
 
     try:
@@ -120,17 +111,12 @@ def get_report_by_not_valid_account(con, readable_report_dt):
 
         con.commit()
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_ACCOUNT')
-        return True
     except:
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_ACCOUNT')
-        return False
 
 
+# Совершение операций в разных городах в течение одного часа.
 def get_report_by_multy_cities_per_hour(con, readable_report_dt):
-    """
-    Verifies the case: transactions in different cities within one hour.
-    
-    """
     cursor = con.cursor()
 
     try:
@@ -155,7 +141,7 @@ def get_report_by_multy_cities_per_hour(con, readable_report_dt):
         ''')
         # print('='*50)
         # print('STG_TRANSACTION_BY_CITY')
-        # u.show_table(cursor, 'STG_TRANSACTION_BY_CITY')
+        # u.showTable(cursor, 'STG_TRANSACTION_BY_CITY')
 
         cursor.execute('''
             create table STG_COMPARE_CITIES AS
@@ -186,7 +172,7 @@ def get_report_by_multy_cities_per_hour(con, readable_report_dt):
         ''')
         # print('='*50)
         # print('STG_COMPARE_CITIES')
-        # u.show_table(cursor, 'STG_COMPARE_CITIES')
+        # u.showTable(cursor, 'STG_COMPARE_CITIES')
 
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS STG_NOT_VALID_TRANSACTION_BY_CITY as
@@ -213,7 +199,7 @@ def get_report_by_multy_cities_per_hour(con, readable_report_dt):
         ''', [readable_report_dt])
         # print('='*50)
         # print('STG_NOT_VALID_TRANSACTION_BY_CITY')
-        # u.show_table(cursor, 'STG_NOT_VALID_TRANSACTION_BY_CITY')
+        # u.showTable(cursor, 'STG_NOT_VALID_TRANSACTION_BY_CITY')
 
         cursor.execute('''
             create table STG_DWH_DIM_CLIENTS_info AS
@@ -233,7 +219,8 @@ def get_report_by_multy_cities_per_hour(con, readable_report_dt):
         ''')
         # print('='*50)
         # print('STG_DWH_DIM_CLIENTS_info')
-        # u.show_table(cursor, 'STG_DWH_DIM_CLIENTS_info')
+        # u.showTable(cursor, 'STG_DWH_DIM_CLIENTS_info')
+
 
         cursor.execute('''
             INSERT INTO REP_FRAUD (
@@ -260,20 +247,23 @@ def get_report_by_multy_cities_per_hour(con, readable_report_dt):
         cursor.execute('DROP TABLE IF EXISTS STG_COMPARE_CITIES')
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_TRANSACTION_BY_CITY')
         cursor.execute('DROP TABLE IF EXISTS STG_DWH_DIM_CLIENTS_info')
-        return True
     except:
         cursor.execute('DROP TABLE IF EXISTS STG_TRANSACTION_BY_CITY')
         cursor.execute('DROP TABLE IF EXISTS STG_COMPARE_CITIES')
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_TRANSACTION_BY_CITY')
         cursor.execute('DROP TABLE IF EXISTS STG_DWH_DIM_CLIENTS_info')
-        return False
+        
+
+    # try:
+    #     print('='*50)
+    #     print('REP_FRAUD')
+    #     u.showTable(cursor, 'REP_FRAUD')
+    # except:
+    #     print('NO REPORT')
+
 
 
 def get_report_by_fraud_operations(con, readable_report_dt):
-    """
-    Searches fraud operations.
-    
-    """
     cursor = con.cursor()
 
     try:
@@ -367,16 +357,14 @@ def get_report_by_fraud_operations(con, readable_report_dt):
         cursor.execute('DROP TABLE IF EXISTS REP_FRAUD')
 
 
-def create_fraud_report(con, report_dt):
+def if_fraud(con, report_dt):
     readable_report_dt = u.get_readable_date(report_dt)
     datetime_object = datetime.strptime(readable_report_dt, '%Y-%m-%d').date()
     shift_day = datetime_object + timedelta(days=1)
     readable_report_dt = str(shift_day)
 
-    result_passport = get_report_by_not_valid_passport(con, readable_report_dt)
-    result_account = get_report_by_not_valid_account(con, readable_report_dt)
-    result_multy_cities = get_report_by_multy_cities_per_hour(con, readable_report_dt)
 
-    if result_passport and result_account and result_multy_cities:
-        print('Fraud operations not found.')
+    get_report_by_not_valid_passport(con, readable_report_dt)
+    get_report_by_not_valid_account(con, readable_report_dt)
+    get_report_by_multy_cities_per_hour(con, readable_report_dt)
     get_report_by_fraud_operations(con, readable_report_dt)

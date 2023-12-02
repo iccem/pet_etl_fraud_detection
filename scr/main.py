@@ -6,14 +6,10 @@ import py_scripts.etl_pipeline as etl
 
 
 def main():
-    connected = False
-    try:
-        con = sqlite3.connect('db.db')
-        connected = True
-    except sqlite3.Error as err:
-        print(err)
-    if connected:
-        init.create_db(con)
+    con = sqlite3.connect('db.db')
+
+    etl.preload(con)
+
 
     print('Please enter a date the report in format dd-mm-yyyy')
     print('='*100)
