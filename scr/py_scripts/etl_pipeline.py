@@ -8,13 +8,6 @@ import py_scripts.rep_fraud as rf
 import py_scripts.init_and_load__ddl_dmldb as init
 
 
-def preload(con):
-    cursor = con.cursor()
-
-    # Загрузка данных из файла ddl_dml.sql в базу данных
-    init.create_db(cursor)
-
-
 def create_etl_pipeline(con, date_report: str):
     """
     Creates additional tables and load
