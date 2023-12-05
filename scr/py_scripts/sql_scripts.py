@@ -1,7 +1,7 @@
 
 def tbl_terminals_init():
     """
-    Returns the table TERMINALS creation script.
+    Return the table TERMINALS creation script.
 
     """
     script = ''' 
@@ -20,7 +20,7 @@ def tbl_terminals_init():
 
 def tbl_transactions_init():
     """
-    Returns the table TRANSACTIONS creation script.
+    Return the table TRANSACTIONS creation script.
 
     """
     script = ''' 
@@ -41,7 +41,7 @@ def tbl_transactions_init():
 
 def tbl_passport_blacklist_init():
     """
-    Returns the table PASSPORT_BLACKLIST creation script.
+    Return the table PASSPORT_BLACKLIST creation script.
 
     """
     script = ''' 
@@ -57,7 +57,7 @@ def tbl_passport_blacklist_init():
 
 def tbl_rep_fraud_init():
     """
-    Returns the table rep_fraud creation script.
+    Return the table rep_fraud creation script.
 
     """
     script = ''' 

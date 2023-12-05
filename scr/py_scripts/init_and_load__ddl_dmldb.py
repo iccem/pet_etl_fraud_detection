@@ -1,7 +1,7 @@
 
 def create_db(cursor) -> None:
     """
-    Generates fake data for the project.
+    Generate fake data for the project.
 
     """
     #cursor = con.cursor()

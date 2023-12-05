@@ -10,16 +10,15 @@ import py_scripts.init_and_load__ddl_dmldb as init
 
 def create_etl_pipeline(con, date_report: str):
     """
-    Creates additional tables and load
+    Create additional tables and load
     data for terminals, transactions
     and passport blacklist reports.
 
     """
-    path = 'D:/Icc/PycharmProjects/pet_etl_fraud_detection/pet_etl_fraud_detection/data/'
+    path = ut.path
     cursor = con.cursor()
     adt.init_additional_tbls(cursor)
     date_report = date_report.replace('-', '')
-    # path_terminals = path + 'terminals_02032021.xlsx'
     path_terminals = path + 'terminals_' + date_report + '.xlsx'
     try:
         lt.load_terminals_report(con, path_terminals)
@@ -48,7 +47,7 @@ def create_etl_pipeline(con, date_report: str):
 
 def get_fraud_report(con, date_report: str) -> None:
     """
-    Creates fraud report.
+    Create fraud report.
 
     """
     r.init_rep_fraud_tbl(con)

@@ -4,7 +4,6 @@ from datetime import timedelta
 import py_scripts.utility as u
 
 
-# Совершение операции при просроченном или заблокированном паспорте.
 def get_report_by_not_valid_passport(con, readable_report_dt):
     cursor = con.cursor()
 
@@ -60,7 +59,7 @@ def get_report_by_not_valid_passport(con, readable_report_dt):
     except:
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_PASSPORT')
 
-# Совершение операции при недействующем договоре.
+
 def get_report_by_not_valid_account(con, readable_report_dt):
     cursor = con.cursor()
 
@@ -115,7 +114,6 @@ def get_report_by_not_valid_account(con, readable_report_dt):
         cursor.execute('DROP TABLE IF EXISTS STG_NOT_VALID_ACCOUNT')
 
 
-# Совершение операций в разных городах в течение одного часа.
 def get_report_by_multy_cities_per_hour(con, readable_report_dt):
     cursor = con.cursor()
 
@@ -262,7 +260,6 @@ def get_report_by_multy_cities_per_hour(con, readable_report_dt):
     #     print('NO REPORT')
 
 
-
 def get_report_by_fraud_operations(con, readable_report_dt):
     cursor = con.cursor()
 
@@ -362,7 +359,6 @@ def if_fraud(con, report_dt):
     datetime_object = datetime.strptime(readable_report_dt, '%Y-%m-%d').date()
     shift_day = datetime_object + timedelta(days=1)
     readable_report_dt = str(shift_day)
-
 
     get_report_by_not_valid_passport(con, readable_report_dt)
     get_report_by_not_valid_account(con, readable_report_dt)
