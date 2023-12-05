@@ -2,9 +2,13 @@ import datetime
 import os
 
 
+path = 'D:/Icc/PycharmProjects/pet_etl_fraud_detection/pet_etl_fraud_detection/data/'
+
+
+
 def validate_date(date_of_report: str) -> bool:
     """
-    Validates the validity of the data.
+    Validate the the data.
 
     """
     try:
@@ -17,7 +21,7 @@ def validate_date(date_of_report: str) -> bool:
 
 def get_date(filename: str) -> str:
     """
-    Parse the file name and returns the date.
+    Parse the file name and return the date.
 
     """
     f = filename.split('_')
@@ -29,7 +33,7 @@ def get_date(filename: str) -> str:
 
 def show_table(cursor, tbl_name: str) -> None:
     """
-    Prints all rows from the table.
+    Print all rows from the table.
 
     """
     cursor.execute('select * from ' + tbl_name)
@@ -39,7 +43,7 @@ def show_table(cursor, tbl_name: str) -> None:
 
 def delete_tbl(cursor, tbl_name) -> None:
     """
-    Drops table.
+    Drop table.
 
     """
     cursor.execute(f'DROP TABLE if exists {tbl_name}')
@@ -47,7 +51,7 @@ def delete_tbl(cursor, tbl_name) -> None:
 
 def delete_view(cursor, tbl_name):
     """
-    Drops view.
+    Drop view.
 
     """
     cursor.execute(f'DROP VIEW if exists {tbl_name}')
@@ -55,7 +59,7 @@ def delete_view(cursor, tbl_name):
 
 def get_readable_date(report_dt):
     """
-    Changes the date according to the template.
+    Change the date according to the template.
 
     """
     report_dt = report_dt.replace('-', '')
