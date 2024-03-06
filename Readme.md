@@ -1,4 +1,4 @@
-﻿# ETL fraud detection (pet-project)
+﻿# ETL fraud detection
 
 Extraction, Transformation and Loading process for fraud detection. Pet-project.
 
